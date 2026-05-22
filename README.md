@@ -1,148 +1,143 @@
-# 🎵 JazzCo — PHP/MySQL Music Streaming Platform
+# JazzCO — PHP/MySQL Music Streaming Platform
 
-> A modern, dark-themed music streaming web app built with PHP, MySQL, and Vanilla JavaScript — featuring a global audio player, admin dashboard, and full user account system.
+JazzCO is a modern dark-themed music streaming website built with HTML5, CSS3, Vanilla JavaScript, PHP, MySQL, and XAMPP/Apache.
 
----
+## Default logins
 
-## ✨ Features
+Admin dashboard:
+- URL: `http://localhost/jazzco/admin/login.php`
+- Username: `admin`
+- Password: `admin123`
 
-### For Users
-- 🎧 **Global bottom music player** — persists across page navigation with queue, shuffle, repeat, volume, and progress bar
-- 🔍 **AJAX live search** — instant results for songs, artists, albums, and playlists
-- 📂 **Library & playlist management** — create, edit, delete playlists; add/remove songs; toggle privacy
-- ❤️ **Favorites & recently played** — personalized listening history
-- 💿 **Albums** — browse, create, and manage albums with cover art
-- 👤 **User profiles** — avatar upload, account settings, password management
-- 🌗 **Dark / Light mode** — theme toggle saved in `localStorage`
-- ⌨️ **Keyboard shortcuts** — control playback without touching the mouse
+Demo user:
+- URL: `http://localhost/jazzco/login.php`
+- Email: `demo@jazzco.local`
+- Password: `user123`
 
-### For Admins
-- 📊 **Dashboard with statistics**
-- 🎵 **Full CRUD** for songs, artists, albums, genres, playlists, and users
-- 📁 **MP3 and cover image uploads** with validation
-- 🛡️ **Secure admin login** — separate from user authentication
+Change these passwords after importing the database.
 
----
+## XAMPP setup
 
-## 🛠️ Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Backend | PHP 8.2 |
-| Database | MySQL / MariaDB (via phpMyAdmin) |
-| Frontend | HTML5, CSS3, Vanilla JavaScript |
-| Server | Apache (XAMPP) |
-| Auth | PHP sessions + bcrypt password hashing |
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-- [XAMPP](https://www.apachefriends.org/) (or any Apache + MySQL + PHP 8+ stack)
-
-### Installation
-
-1. **Clone or download** this repository into your XAMPP `htdocs` folder:
-   ```
-   C:\xampp\htdocs\jazzco          ← Windows
-   /Applications/XAMPP/htdocs/jazzco  ← macOS
-   /opt/lampp/htdocs/jazzco           ← Linux
-   ```
-
-2. **Start Apache and MySQL** from the XAMPP Control Panel.
-
-3. **Import the database:**
-   - Open `http://localhost/phpmyadmin`
-   - Click **Import** → select `jazzco_db.sql` → click **Go**
-
-4. **Visit the app:**
+1. Install XAMPP.
+2. Start **Apache** and **MySQL** from the XAMPP Control Panel.
+3. Copy the `jazzco` folder into:
+   - Windows: `C:\xampp\htdocs\jazzco`
+   - macOS/Linux XAMPP: `/Applications/XAMPP/htdocs/jazzco` or `/opt/lampp/htdocs/jazzco`
+4. Open phpMyAdmin:
+   - `http://localhost/phpmyadmin`
+5. Click **Import**.
+6. Choose `database.sql` from this folder.
+7. Click **Go**.
+8. Visit:
    - Website: `http://localhost/jazzco/`
    - Player: `http://localhost/jazzco/player.php`
    - Admin: `http://localhost/jazzco/admin/login.php`
 
-### Default Credentials
+## Database connection
 
-| Role | URL | Username / Email | Password |
-|---|---|---|---|
-| Admin | `/admin/login.php` | `admin` | `admin123` |
-| Demo User | `/login.php` | `demo@jazzco.local` | `user123` |
-
-> ⚠️ Change these passwords after your first login.
-
----
-
-## ⚙️ Configuration
-
-Database connection is set in `includes/config.php`:
+The default connection is configured for XAMPP:
 
 ```php
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'jazzco_db');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+DB_HOST = localhost
+DB_NAME = jazzco_db
+DB_USER = root
+DB_PASS = empty
 ```
 
-Edit these if your MySQL credentials differ from the XAMPP defaults.
+Edit `includes/config.php` if your MySQL username/password is different.
 
----
+## Upload notes
 
-## 📁 Project Structure
+- MP3 uploads are stored in `uploads/songs/`.
+- Cover/profile uploads are stored in `uploads/covers/` and `uploads/profiles/`.
+- Maximum song upload size is configured in `includes/functions.php`.
+- If large files fail, increase these in `php.ini`:
+  - `upload_max_filesize`
+  - `post_max_size`
+  - `max_execution_time`
 
-```
+## Features included
+
+- Landing page with animated hero, trending songs, artists, CTA, footer.
+- User registration/login/logout with password hashing and remember-me cookie.
+- PHP session management and secure helper functions.
+- User profile, profile picture upload, account updates, favorites, recently played.
+- Responsive music player with queue, shuffle, repeat, volume, progress, fullscreen style view, mini player, keyboard shortcuts.
+- AJAX live search for songs, artists, albums, and playlists.
+- Playlist CRUD API with create/delete/add/remove/toggle privacy.
+- Favorites API.
+- Recently played tracking.
+- Admin dashboard with statistics.
+- Admin song uploads with MP3/cover validation.
+- Admin users, playlists, genres, and settings management.
+- MySQL schema with primary keys, foreign keys, relationships, and timestamps.
+
+## File structure
+
+```text
 /jazzco
-├── /admin              ← Admin dashboard pages (songs, artists, albums, users...)
 ├── /assets
-│   ├── /css            ← Main stylesheet
-│   ├── /js             ← Player logic and app scripts
-│   ├── /images         ← Default covers and avatars (SVG)
-│   └── /songs          ← Demo MP3 files
-├── /includes           ← Config, DB connection, header/footer, helper functions
-├── /uploads            ← User-uploaded songs, covers, artist photos, avatars
-├── index.php           ← Landing page
-├── player.php          ← Full-screen player view
-├── library.php         ← Song library
-├── albums.php          ← Albums browser
-├── album.php           ← Individual album page
-├── playlists.php       ← Playlists browser
-├── playlist.php        ← Individual playlist page
-├── profile.php         ← User profile & settings
+│   ├── /css
+│   ├── /js
+│   ├── /images
+│   ├── /songs
+│   └── /icons
+├── /admin
+├── /includes
+├── /uploads
+├── index.php
 ├── login.php
 ├── register.php
-├── search.php
-├── jazzco_db.sql       ← Full database schema + seed data
-└── upgrade_add_user_albums.sql  ← Run this if upgrading from an older version
+├── profile.php
+├── player.php
+├── database.sql
+└── README.md
 ```
 
----
 
-## 🔌 API Endpoints
+## Admin CRUD Update
 
-| Endpoint | Description |
-|---|---|
-| `api_song.php` | Single song data |
-| `api_songs.php` | Song list |
-| `playlist_api.php` | Playlist CRUD (create, delete, add/remove songs, toggle privacy) |
-| `favorite_api.php` | Toggle song favorites |
-| `recent_api.php` | Recently played tracking |
+The admin dashboard includes full CRUD pages for:
 
----
+- Songs: create/upload, read, update metadata/files/covers, delete.
+- Artists: create, read, update, delete, and upload artist photos.
+- Albums: create, read, update, delete, and upload album covers.
+- Users: create, read, update, delete, and update profile pictures/passwords.
+- Playlists: create, read, update, delete, and manage playlist songs.
+- Genres: create, read, update, delete.
 
-## 🐛 Troubleshooting
+Artist photos are stored inside:
 
-### Uploads failing on macOS
-Run the diagnostic page first:
+```text
+uploads/artists/
 ```
+
+The artist photo path is saved in the existing `artists.image_path` column.
+
+## macOS XAMPP upload fix
+
+If the website works but **Admin → Songs → Upload song** fails on a MacBook, open this diagnostic page:
+
+```text
 http://localhost/jazzco/setup_check.php
 ```
-If any upload folder shows **Fix needed**, run:
+
+If any upload folder says **Fix needed**, run this command in Terminal:
+
 ```bash
 chmod -R 777 /Applications/XAMPP/xamppfiles/htdocs/jazzco/uploads
 ```
+
 Then restart Apache from XAMPP Manager.
 
-### Large MP3 files timing out
-Edit `/Applications/XAMPP/xamppfiles/etc/php.ini` (macOS) or `C:\xampp\php\php.ini` (Windows):
+For large MP3 files, edit:
+
+```text
+/Applications/XAMPP/xamppfiles/etc/php.ini
+```
+
+Use these values, save the file, and restart Apache:
+
 ```ini
 file_uploads = On
 upload_max_filesize = 100M
@@ -150,32 +145,43 @@ post_max_size = 120M
 max_execution_time = 300
 memory_limit = 256M
 ```
-Restart Apache after saving.
 
-### Upgrading from an older JazzCo database
-If you already have an existing `jazzco_db` imported, run only the upgrade script — do **not** re-import the full `jazzco_db.sql`:
+This version also accepts common macOS/XAMPP MP3 MIME detections such as `audio/x-mp3` and `application/octet-stream` when the uploaded file extension is `.mp3`.
+
+## User Albums + Dark/Light Mode Update
+
+This version adds:
+
+- A public Albums page: `http://localhost/jazzco/albums.php`
+- An individual album page: `http://localhost/jazzco/album.php?id=1`
+- Logged-in users can create albums with title, artist name, release year, and cover image.
+- Album owners can edit album details, replace covers, delete albums, and attach existing songs to their album.
+- Album cards in the library now open the album page.
+- Live search album results now open the matching album.
+- The website now has a real dark/light mode switch saved in the browser with `localStorage`.
+
+If you already imported an older JazzCO database, import this file in phpMyAdmin once:
+
+```text
+upgrade_add_user_albums.sql
 ```
-http://localhost/phpmyadmin → Import → upgrade_add_user_albums.sql
-```
 
----
+If you import `database.sql` fresh, you do not need the upgrade file.
 
-## 📸 Screenshots
+## Player Queue + Global Playback Update
 
-> _Add screenshots of the landing page, player, and admin dashboard here._
+This version adds a global bottom music player across the website. The player saves the current queue, selected song, progress, volume, shuffle, and repeat settings in the browser using localStorage. This lets the user continue listening while moving between JazzCO pages.
 
----
+Because JazzCO is a classic PHP multi-page website, opening a new page reloads the document. The player restores the last song and time automatically after the new page loads. If the browser blocks autoplay after page navigation, press the Play button once.
 
-## 👥 Team
+Users can now:
 
-Developed as a software engineering project at **Misr International University (MIU)**.
-
-- Eng. Ahmed Yasser
-- Eng. Janna Sherif
-- Eng. Youssef Ahmed
-
----
-
-## 📄 License
-
-This project was developed for academic purposes. All rights reserved by the project authors.
+- Add songs to a queue from song cards.
+- Open the queue from the bottom player.
+- Remove songs from the queue.
+- Clear the queue.
+- Create playlists from `playlists.php`.
+- Open playlist pages using `playlist.php?id=ID`.
+- Add songs to playlists from the Playlist button on song cards.
+- Create a playlist directly from the add-to-playlist modal.
+- Upload playlist cover images.
